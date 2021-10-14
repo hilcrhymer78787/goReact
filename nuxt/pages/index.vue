@@ -2,7 +2,7 @@
     <div>
         <div class="d-flex">
             <v-text-field v-model="newTask" class="mr-2" @keydown.enter="createTask()" placeholder="newTask" prepend-inner-icon="mdi-check" background-color="white" color="info" outlined dense light clearable></v-text-field>
-            <v-btn @click="createTask()" color="orange lighten-1">create</v-btn>
+            <v-btn dark @click="createTask()" color="orange lighten-1">create</v-btn>
         </div>
         <v-card>
             <v-simple-table>
@@ -19,8 +19,8 @@
                         <td>{{ task.name }}</td>
                         <td>
                             <div class="d-flex justify-end">
-                                <v-btn @click="dialogOpen(task.id,task.name)" color="orange lighten-1" class="pa-0" style="margin-right:6px;">edit</v-btn>
-                                <v-btn @click="deleteTask(task.id,task.name)" color="error lighten-1" class="pa-0">delete</v-btn>
+                                <v-btn dark @click="dialogOpen(task.id,task.name)" color="orange lighten-1" class="pa-0" style="margin-right:6px;">edit</v-btn>
+                                <v-btn dark @click="deleteTask(task.id,task.name)" color="error lighten-1" class="pa-0">delete</v-btn>
                             </div>
                         </td>
                     </tr>
@@ -34,13 +34,13 @@
                 <v-card-text>
                     <div class="d-flex pt-5">
                         <v-text-field v-model="focusTaskName" class="mr-2" @keydown.enter="updateTask()" placeholder="focusTaskName" prepend-inner-icon="mdi-check" background-color="white" color="info" outlined dense light clearable></v-text-field>
-                        <v-btn @click="updateTask()" color="orange lighten-1">update</v-btn>
+                        <v-btn dark @click="updateTask()" color="orange lighten-1">update</v-btn>
                     </div>
                 </v-card-text>
                 <v-divider></v-divider>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn @click="dialog = false">close</v-btn>
+                    <v-btn dark @click="dialog = false">close</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
