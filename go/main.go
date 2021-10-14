@@ -11,7 +11,7 @@ import (
 	"github.com/labstack/echo"
 )
 
-type Opening struct {
+type tasks struct {
 	ID   int    `json:"id"`
 	Name string `json:"name"`
 }
@@ -40,16 +40,18 @@ func main() {
 	e.Use(middleware.CORS())
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-	//   e.GET("/opening/read", read)
-	e.GET("/opening/allread", allread)
-	// e.GET("/test", test)
+	//   e.GET("/tasks/read", read)
+	e.POST("/tasks/create", taskCreate)
+	e.GET("/tasks/allread", allread)
+	e.PUT("/tasks/update", taskUpdate)
+	e.DELETE("/tasks/delete", taskDelete)
 	e.Start("localhost:1323")
 }
 
 // func read(c echo.Context) error {
 
 // 	// データベース接続処理
-// 	db, err := sql.Open("mysql", "root@/test")
+// db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:8889)/test")
 // 	if err != nil {
 // 		log.Fatal(err)
 // 	}
@@ -57,7 +59,7 @@ func main() {
 
 // 	id := c.QueryParam("id")
 // 	var name string
-// 	err = db.QueryRow("SELECT name FROM opening WHERE opening_id = ?", id).Scan(&name)
+// 	err = db.QueryRow("SELECT name FROM tasks WHERE tasks_id = ?", id).Scan(&name)
 // 	if err != nil {
 // 		log.Fatal(err)
 // 	}
@@ -70,6 +72,21 @@ func main() {
 // 	return c.JSON(http.StatusOK, data)
 // }
 
+func taskCreate(c echo.Context) error {
+
+	// データベース接続処理
+	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:8889)/test")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	name := c.QueryParam("name")
+
+	db.Query(`INSERT INTO tasks (name) VALUES (?)`, name)
+	return nil
+}
+
 func allread(c echo.Context) error {
 
 	// データベース接続処理
@@ -79,33 +96,50 @@ func allread(c echo.Context) error {
 	}
 	defer db.Close()
 
-	rows, err := db.Query("SELECT * FROM opening")
+	rows, err := db.Query("SELECT * FROM tasks")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	openingArray := make([]Opening, 0)
+	tasksArray := make([]tasks, 0)
 	for rows.Next() {
-		var opening Opening
-		err := rows.Scan(&opening.ID, &opening.Name)
+		var tasks tasks
+		err := rows.Scan(&tasks.ID, &tasks.Name)
 		if err != nil {
 			log.Fatal(err)
 		}
-		openingArray = append(openingArray, opening)
+		tasksArray = append(tasksArray, tasks)
 	}
-	return c.JSON(http.StatusOK, openingArray)
+	return c.JSON(http.StatusOK, tasksArray)
 }
 
-// func test(c echo.Context) error {
+func taskUpdate(c echo.Context) error {
 
-//  // データベース接続処理
-//  db, err := sql.Open("mysql", "root@/test")
-//  if err != nil {
-//    log.Fatal(err)
-//  }
-//  defer db.Close()
+	// データベース接続処理
+	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:8889)/test")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
 
-//  db.Query("SELECT * FROM opening")
-//  return c.JSON(http.StatusOK, "rows")
+	id := c.QueryParam("id")
+	name := c.QueryParam("name")
 
-// }
+	db.Query(`UPDATE tasks set name = ? WHERE id = ?`, name, id)
+	return nil
+}
+
+func taskDelete(c echo.Context) error {
+
+	// データベース接続処理
+	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:8889)/test")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	id := c.QueryParam("id")
+
+	db.Query(`DELETE FROM tasks WHERE id = (?)`, id)
+	return nil
+}
