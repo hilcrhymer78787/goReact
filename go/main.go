@@ -31,8 +31,6 @@ func main() {
 	db.Query(`INSERT INTO tasks (name) VALUES ('Task1')`)
 	db.Query(`INSERT INTO tasks (name) VALUES ('Task2')`)
 	db.Query(`INSERT INTO tasks (name) VALUES ('Task3')`)
-	db.Query(`INSERT INTO tasks (name) VALUES ('Task4')`)
-	db.Query(`INSERT INTO tasks (name) VALUES ('Task5')`)
 
 	e := echo.New()
 
@@ -45,6 +43,7 @@ func main() {
 	e.GET("/tasks/read", read)
 	e.PUT("/tasks/update", taskUpdate)
 	e.DELETE("/tasks/delete", taskDelete)
+
 	e.Start("localhost:1323")
 }
 
