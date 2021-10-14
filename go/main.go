@@ -40,37 +40,13 @@ func main() {
 	e.Use(middleware.CORS())
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-	//   e.GET("/tasks/read", read)
+
 	e.POST("/tasks/create", taskCreate)
 	e.GET("/tasks/read", read)
 	e.PUT("/tasks/update", taskUpdate)
 	e.DELETE("/tasks/delete", taskDelete)
 	e.Start("localhost:1323")
 }
-
-// func read(c echo.Context) error {
-
-// 	// データベース接続処理
-// db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:8889)/test")
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	defer db.Close()
-
-// 	id := c.QueryParam("id")
-// 	var name string
-// 	err = db.QueryRow("SELECT name FROM tasks WHERE tasks_id = ?", id).Scan(&name)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-
-// 	data := map[string]string{
-// 		"id":   id,
-// 		"name": name,
-// 	}
-
-// 	return c.JSON(http.StatusOK, data)
-// }
 
 func taskCreate(c echo.Context) error {
 
