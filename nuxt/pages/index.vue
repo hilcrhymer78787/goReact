@@ -1,21 +1,30 @@
 <template>
-    <div class="crud">
-        <form @submit.prevent="createTask">
-            <input v-model="newTask" type="text">
-            <v-btn @click="createTask()" color="orange" dark>create</v-btn>
-        </form>
-        <hr>
-        <ul>
-            <li class="mb-3">
-                <span class="pr-5">id</span>
-                <span class="pr-5">name</span>
-            </li>
-            <li v-for="(task, index) in tasks" :key="index" class="mb-3">
-                <span class="pr-5">{{task.id}}</span>
-                <span class="pr-5">{{task.name}}</span>
-                <v-btn @click="deleteTask()" color="error" dark>delete</v-btn>
-            </li>
-        </ul>
+    <div>
+        <div class="d-flex">
+            <v-text-field v-model="newTask" class="mr-2" @keydown.enter="createTask()" placeholder="newTask" prepend-inner-icon="mdi-check" background-color="white" color="info" outlined dense light clearable></v-text-field>
+            <v-btn @click="createTask()" color="info">create</v-btn>
+        </div>
+        <v-simple-table>
+            <thead>
+                <tr>
+                    <th class="text-left">id</th>
+                    <th class="text-left">Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="task in tasks" :key="task.id">
+                    <td>{{ task.id }}</td>
+                    <td>{{ task.name }}</td>
+                    <td>
+                        <div class="d-flex justify-end">
+                            <v-btn color="orange" class="pa-0" style="margin-right:6px;">edit</v-btn>
+                            <v-btn @click="deleteTask()" color="error" class="pa-0">delete</v-btn>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </v-simple-table>
     </div>
 </template>
 
