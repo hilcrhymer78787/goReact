@@ -23,14 +23,6 @@ func main() {
 		log.Fatal(err)
 	}
 	defer db.Close()
-	db.Query(`CREATE TABLE IF NOT EXISTS tasks (
-		id SERIAL NOT NULL PRIMARY KEY,
-		name VARCHAR(255)
-	  )`)
-	db.Query(`TRUNCATE TABLE tasks`)
-	db.Query(`INSERT INTO tasks (name) VALUES ('Task1')`)
-	db.Query(`INSERT INTO tasks (name) VALUES ('Task2')`)
-	db.Query(`INSERT INTO tasks (name) VALUES ('Task3')`)
 
 	e := echo.New()
 
