@@ -42,7 +42,7 @@ func main() {
 	e.Use(middleware.Recover())
 	//   e.GET("/tasks/read", read)
 	e.POST("/tasks/create", taskCreate)
-	e.GET("/tasks/allread", allread)
+	e.GET("/tasks/read", read)
 	e.PUT("/tasks/update", taskUpdate)
 	e.DELETE("/tasks/delete", taskDelete)
 	e.Start("localhost:1323")
@@ -87,7 +87,7 @@ func taskCreate(c echo.Context) error {
 	return nil
 }
 
-func allread(c echo.Context) error {
+func read(c echo.Context) error {
 
 	// データベース接続処理
 	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:8889)/test")

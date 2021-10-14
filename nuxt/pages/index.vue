@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="d-flex">
+        <div class="d-flex pt-5">
             <v-text-field v-model="newTask" class="mr-2" @keydown.enter="createTask()" placeholder="newTask" prepend-inner-icon="mdi-check" background-color="white" color="info" outlined dense light clearable></v-text-field>
             <v-btn dark @click="createTask()" color="orange lighten-1">create</v-btn>
         </div>
@@ -78,7 +78,7 @@ export default {
         },
         readTask() {
             this.$axios
-                .get(`/tasks/allread`)
+                .get(`/tasks/read`)
                 .then((res) => {
                     this.tasks = res.data;
                 })
