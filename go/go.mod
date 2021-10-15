@@ -1,4 +1,4 @@
-module todo_app
+module sample
 
 go 1.16
 
