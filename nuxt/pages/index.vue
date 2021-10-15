@@ -66,8 +66,11 @@ export default {
             this.focusTaskId = id;
         },
         createTask() {
+            if(!this.newTask){
+                return
+            }
             this.$axios
-                .post(`/tasks/create?name=${this.newTask}`)
+                .post(`/task/create?name=${this.newTask}`)
                 .then((res) => {
                     this.newTask = "";
                     this.readTask();
@@ -78,7 +81,7 @@ export default {
         },
         readTask() {
             this.$axios
-                .get(`/tasks/read`)
+                .get(`/task/read`)
                 .then((res) => {
                     this.tasks = res.data;
                 })
@@ -89,7 +92,7 @@ export default {
         updateTask() {
             this.$axios
                 .put(
-                    `/tasks/update?id=${this.focusTaskId}&name=${this.focusTaskName}`
+                    `/task/update?id=${this.focusTaskId}&name=${this.focusTaskName}`
                 )
                 .then((res) => {
                     this.readTask();
@@ -102,7 +105,7 @@ export default {
         deleteTask(id, name) {
             if (confirm(`「${name}」を削除しますか？`)) {
                 this.$axios
-                    .delete(`/tasks/delete?id=${id}`)
+                    .delete(`/task/delete?id=${id}`)
                     .then((res) => {
                         this.readTask();
                     })

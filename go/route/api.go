@@ -7,8 +7,8 @@ import (
 )
 
 func SetAPI(e *echo.Echo) {
-	e.POST("/tasks/create", task.Create)
-	e.GET("/tasks/read", task.Read)
-	e.PUT("/tasks/update", task.Update)
-	e.DELETE("/tasks/delete", task.Delete)
+	e.POST("/task/create", task.Create)
+	e.GET("/task/read", task.Read)
+	e.PUT("/task/update", task.Update)
+	e.DELETE("/task/delete", task.Delete)
 }
