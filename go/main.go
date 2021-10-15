@@ -26,7 +26,7 @@ func main() {
 
 	e := echo.New()
 
-	// 全てのリクエストで差し込みたいミドルウェア（ログとか）はここ
+	// ミドルウェア
 	e.Use(middleware.CORS())
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
