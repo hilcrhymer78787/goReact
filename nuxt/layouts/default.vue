@@ -15,3 +15,8 @@ export default {
     },
 };
 </script>
+<style lang="scss">
+.v-application{
+    background-color: #e9e9e9 !important;
+}
+</style>
