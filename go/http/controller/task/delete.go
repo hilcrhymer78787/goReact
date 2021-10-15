@@ -13,6 +13,7 @@ func Delete(c echo.Context) error {
 	defer db.Close()
 
 	id := c.QueryParam("id")
-	db.Query("DELETE FROM tasks WHERE id = ?", id)
+
+	db.Query(`DELETE FROM tasks WHERE id = (?)`, id)
 	return nil
 }

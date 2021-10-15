@@ -7,12 +7,13 @@ import (
 )
 
 // タスク登録
-func Create(c echo.Context) (err error) {
+func Update(c echo.Context) (err error) {
 	db := db.Connect()
 	defer db.Close()
 
+	id := c.QueryParam("id")
 	name := c.QueryParam("name")
 
-	db.Query(`INSERT INTO tasks (name) VALUES (?)`, name)
+	db.Query(`UPDATE tasks set name = ? WHERE id = ?`, name, id)
 	return nil
 }
