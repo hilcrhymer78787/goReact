@@ -11,8 +11,6 @@ import (
 )
 
 func main() {
-	db := db.Connect()
-	defer db.Close()
 
 	initDb()
 
