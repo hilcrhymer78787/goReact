@@ -1,10 +1,13 @@
 <template>
     <div>
-        <div class="d-flex pt-5">
-            <v-text-field v-model="newTask" class="mr-2" @keydown.enter="createTask()" placeholder="newTask" prepend-inner-icon="mdi-check" background-color="white" color="info" outlined dense light clearable></v-text-field>
-            <v-btn dark @click="createTask()" color="orange lighten-1">create</v-btn>
-        </div>
         <v-card>
+            <v-toolbar color="info" height="70px" dark class="d-block" style="box-shadow:none;">
+                <v-toolbar-title>タスク</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-btn @click="createDialogOpen()" light height="35px" width="35px" fab elevation="0">
+                    <v-icon color="info">mdi-plus</v-icon>
+                </v-btn>
+            </v-toolbar>
             <v-simple-table>
                 <thead>
                     <tr>
@@ -45,6 +48,23 @@
             </v-card>
         </v-dialog>
 
+        <v-dialog v-model="createDialog" width="500">
+            <v-card>
+                <v-card-title class="text-h5">create task</v-card-title>
+                <v-card-text>
+                    <div class="d-flex pt-5">
+                        <v-text-field v-model="newTask" class="mr-2" @keydown.enter="createTask()" placeholder="newTask" prepend-inner-icon="mdi-check" background-color="white" color="info" outlined dense light clearable></v-text-field>
+                        <v-btn dark @click="createTask()" color="orange lighten-1">create</v-btn>
+                    </div>
+                </v-card-text>
+                <v-divider></v-divider>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn dark @click="dialog = false">close</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
     </div>
 </template>
 
@@ -53,6 +73,7 @@ export default {
     data() {
         return {
             dialog: false,
+            createDialog: false,
             newTask: "",
             focusTaskId: "",
             focusTaskName: "",
@@ -65,15 +86,20 @@ export default {
             this.focusTaskName = name;
             this.focusTaskId = id;
         },
+        createDialogOpen(id, name) {
+            this.createDialog = true;
+            this.newTask = "";
+        },
         createTask() {
-            if(!this.newTask){
-                return
+            if (!this.newTask) {
+                return;
             }
             this.$axios
                 .post(`/task/create?name=${this.newTask}`)
                 .then((res) => {
                     this.newTask = "";
                     this.readTask();
+                    this.createDialog = false;
                 })
                 .catch((err) => {
                     alert("通信に失敗しました");
