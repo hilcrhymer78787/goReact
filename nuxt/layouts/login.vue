@@ -1,11 +1,13 @@
 <template>
-    <v-app>
-        <v-main>
-            <v-container>
-                <Nuxt v-if="$store.state.loginInfo != null" />
-            </v-container>
-        </v-main>
-    </v-app>
+    <div v-if="$store.state.loginInfo != null">
+        <v-app>
+            <v-main>
+                <v-container>
+                    <Nuxt />
+                </v-container>
+            </v-main>
+        </v-app>
+    </div>
 </template>
 
 <script>

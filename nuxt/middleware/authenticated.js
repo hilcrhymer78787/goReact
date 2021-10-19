@@ -7,12 +7,16 @@ export default async ({ store, route, redirect }) => {
             if ((route.name == 'login' || route.name == 'register')) {
                 redirect({ name: 'index' })
             }
-            store.commit('setLoginInfo', user)
+            setTimeout(() => {
+                store.commit('setLoginInfo', user)
+            }, 500);
         } else {
             if (!(route.name == 'login' || route.name == 'register')) {
                 redirect({ name: 'login' })
             }
-            store.commit('setLoginInfo', false)
+            setTimeout(() => {
+                store.commit('setLoginInfo', false)
+            }, 500);
         }
     })
 }
