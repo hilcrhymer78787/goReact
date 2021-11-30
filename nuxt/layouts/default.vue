@@ -23,9 +23,14 @@ export default {
         return {
             navs: [
                 {
-                    ttl: "タスク",
+                    ttl: "index",
                     icon: "mdi-playlist-check",
                     to: "/",
+                },
+                {
+                    ttl: "タスク",
+                    icon: "mdi-playlist-check",
+                    to: "/task",
                 },
                 {
                     ttl: "マイページ",
