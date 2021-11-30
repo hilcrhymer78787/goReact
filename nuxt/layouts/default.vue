@@ -1,14 +1,6 @@
 <template>
     <div>
-        <v-app v-if="$store.state.loginInfo != null">
-            <v-app-bar app fixed>
-                <div style="width:45px;">
-                    <v-img v-if="loginInfo" :src="loginInfo.photoURL" class="d-block rounded-circle"></v-img>
-                </div>
-                <div class="pl-3" v-if="loginInfo">{{loginInfo.displayName}}</div>
-                <v-spacer></v-spacer>
-                <v-btn @click="$store.dispatch('signOut')">ログアウト</v-btn>
-            </v-app-bar>
+        <v-app v-if="loginInfo != null">
             <v-main>
                 <v-container>
                     <Nuxt />
