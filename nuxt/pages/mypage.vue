@@ -17,7 +17,7 @@
             <v-divider></v-divider>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn @click="logout()" class="mr-2">ログアウト</v-btn>
+                <v-btn @click="signOut()" class="mr-2">ログアウト</v-btn>
                 <v-btn @click="createUserDialog = true" dark color="orange">編集</v-btn>
             </v-card-actions>
         </v-card>
@@ -32,6 +32,14 @@ export default {
     },
     computed: {
         ...mapState(["loginInfo"]),
+    },
+    methods: {
+        signOut() {
+            if (!confirm("ログアウトしますか？")) {
+                return;
+            }
+            this.$store.dispatch("signOut");
+        },
     },
 };
 </script>
