@@ -7,6 +7,7 @@ import (
 )
 
 func SetAPI(e *echo.Echo) {
+	e.GET("/", task.Test)
 	e.POST("/task/create", task.Create)
 	e.GET("/task/read", task.Read)
 	e.PUT("/task/update", task.Update)
