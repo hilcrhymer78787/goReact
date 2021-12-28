@@ -8,7 +8,7 @@ import (
 	"github.com/labstack/echo"
 )
 
-type tasks struct {
+type task struct {
 	ID   int    `json:"id"`
 	Name string `json:"name"`
 }
@@ -19,19 +19,21 @@ func Read(c echo.Context) error {
 	db := db.Connect()
 	defer db.Close()
 
+	// res := new(response.Tasks)
+
 	rows, err := db.Query("SELECT * FROM tasks")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	tasksArray := make([]tasks, 0)
+	tasks := make([]task, 0)
 	for rows.Next() {
-		var tasks tasks
-		err := rows.Scan(&tasks.ID, &tasks.Name)
+		var task task
+		err := rows.Scan(&task.ID, &task.Name)
 		if err != nil {
 			log.Fatal(err)
 		}
-		tasksArray = append(tasksArray, tasks)
+		tasks = append(tasks, task)
 	}
-	return c.JSON(http.StatusOK, tasksArray)
+	return c.JSON(http.StatusOK, tasks)
 }
