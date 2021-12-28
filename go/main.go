@@ -38,4 +38,5 @@ func initDb() {
 	db.Query(`INSERT INTO tasks (name) VALUES ('Task1')`)
 	db.Query(`INSERT INTO tasks (name) VALUES ('Task2')`)
 	db.Query(`INSERT INTO tasks (name) VALUES ('Task3')`)
+	db.Query(`INSERT INTO tasks (name) VALUES ('Task4')`)
 }
