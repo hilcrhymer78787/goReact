@@ -109,7 +109,8 @@ export default {
             this.$axios
                 .get(`/task/read`)
                 .then((res) => {
-                    this.tasks = res.data;
+                    console.log(res)
+                    this.tasks = res.data.tasks;
                 })
                 .catch((err) => {
                     alert("通信に失敗しました");

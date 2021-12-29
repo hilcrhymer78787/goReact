@@ -3,15 +3,11 @@ package task
 import (
 	"log"
 	"net/http"
+	"sample/http/response"
 	"sample/pkg/db"
 
 	"github.com/labstack/echo"
 )
-
-type task struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-}
 
 // タスク読み込み
 func Read(c echo.Context) error {
@@ -19,21 +15,21 @@ func Read(c echo.Context) error {
 	db := db.Connect()
 	defer db.Close()
 
-	// res := new(response.Tasks)
+	res := new(response.Res)
+	res.Hoge = "hogehoge"
 
 	rows, err := db.Query("SELECT * FROM tasks")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	tasks := make([]task, 0)
 	for rows.Next() {
-		var task task
-		err := rows.Scan(&task.ID, &task.Name)
+		task := response.Task{}
+		err := rows.Scan(&task.Id, &task.Name)
 		if err != nil {
 			log.Fatal(err)
 		}
-		tasks = append(tasks, task)
+		res.Tasks = append(res.Tasks, task)
 	}
-	return c.JSON(http.StatusOK, tasks)
+	return c.JSON(http.StatusOK, res)
 }
