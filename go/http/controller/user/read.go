@@ -3,6 +3,7 @@ package user
 import (
 	"log"
 	"net/http"
+	response "sample/http/response/user/read"
 	"sample/pkg/db"
 
 	"github.com/labstack/echo"
@@ -13,7 +14,7 @@ func BearerAuthentication(c echo.Context) error {
 	db := db.Connect()
 	defer db.Close()
 
-	// res := new(response.Res)
+	res := new(response.Res)
 
 	rows, err := db.Query("SELECT * FROM users WHERE id = 1 LIMIT 1;")
 	if err != nil {
@@ -27,6 +28,6 @@ func BearerAuthentication(c echo.Context) error {
 		// }
 	}
 
-	return c.JSON(http.StatusOK, rows)
+	return c.JSON(http.StatusOK, res)
 
 }
