@@ -10,9 +10,14 @@ import (
 func Create(c echo.Context) (err error) {
 	db := db.Connect()
 	defer db.Close()
-
-	name := c.QueryParam("name")
-
-	db.Query(`INSERT INTO tasks (name) VALUES (?)`, name)
+	type Task struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+	}
+	task := new(Task)
+	if err := c.Bind(task); err != nil {
+		return err
+	}
+	db.Query(`INSERT INTO tasks (name) VALUES (?)`, task.Name)
 	return nil
 }

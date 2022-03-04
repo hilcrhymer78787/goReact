@@ -37,7 +37,6 @@ export default function TaskItem(props: Props) {
                 <ListItemText
                     onClick={() => { setCreateTaskDialog(true); }}
                     primary={props.task.name}
-                    secondary={`想定:${0}分` + ` 実績:${0}分`}
                 />
             </ListItemButton>
             <Dialog open={createTaskDialog} onClose={() => { setCreateTaskDialog(false); }}>
