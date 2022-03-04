@@ -7,7 +7,13 @@ const CancelToken = axios.CancelToken;
 let setLoginInfoByTokenCancel: any = null;
 
 const initialState = {
-    loginInfo: null,
+    loginInfo: {
+        email: "user1@gmail.com",
+        id: 1,
+        name: "user1",
+        token: "user1@gmail.comsyflysHt4HkYDTVh8DjHEOf9jIwBSZ6IsCJxGmayDNXCshvkDrVB7KxwNLqTLdB3pbTx3lmTNe3Dt4WRkISGgQpZ3tgF5tRmrYVs",
+        user_img: "https://picsum.photos/500/300?image=1",
+    },
 };
 
 const reducer = (state = initialState, action) => {
@@ -25,7 +31,7 @@ export const bearerAuthentication = async () => {
         setLoginInfoByTokenCancel()
     }
     const requestConfig: AxiosRequestConfig = {
-        url: `/api/user/bearer_authentication`,
+        url: `/user/bearer_authentication`,
         method: "GET",
         cancelToken: new CancelToken(c => {
             setLoginInfoByTokenCancel = c
@@ -34,6 +40,7 @@ export const bearerAuthentication = async () => {
     api(requestConfig)
         .then((res: AxiosResponse<apiUserBearerAuthenticationResponseType>) => {
             // トークンが有効
+            return
             if (localStorage.getItem("token")) {
                 store.dispatch({ type: "setLoginInfo", value: res.data })
             }

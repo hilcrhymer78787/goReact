@@ -12,11 +12,13 @@ const mapStateToProps = (state: any) => {
 function Layout({ dispatch, children, loginInfo }) {
     return (
         <>
-            <Header />
-            <Container sx={{ p: '70px 10px' }} maxWidth="xs">
-                {children}
-            </Container>
-            <Navigation />
+            {loginInfo && <>
+                <Header />
+                <Container sx={{ p: '70px 10px' }} maxWidth="xs">
+                    {children}
+                </Container>
+                <Navigation />
+            </>}
         </>
     )
 }
