@@ -5,6 +5,10 @@ import store from "@/store/index";
 
 export const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+    headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+    },
 })
 
 api.interceptors.request.use(
@@ -13,7 +17,11 @@ api.interceptors.request.use(
         return req
     }
 )
-
+// headers: {
+//     'Content-Type': 'application/json',
+//     'X-Requested-With': 'XMLHttpRequest',
+//     'Authorization': process.env.AUTHORIZATION
+//   },
 api.interceptors.response.use(
     (res: AxiosResponse) => {
         console.log(res.config.baseURL + res.config.url, res)

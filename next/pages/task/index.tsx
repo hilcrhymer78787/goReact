@@ -8,14 +8,14 @@ const mapStateToProps = (state: any) => {
         loginInfo: state.loginInfo,
     };
 };
-Task.getLayout = function getLayout (page: any) {
+Task.getLayout = function getLayout(page: any) {
     return (
         <Layout>{page}</Layout>
     );
 };
-function Task ({ loginInfo }) {
+function Task({ loginInfo }) {
     return (
-        <div>task</div>
+        <TaskList />
     );
 }
 export default connect(mapStateToProps)(Task);

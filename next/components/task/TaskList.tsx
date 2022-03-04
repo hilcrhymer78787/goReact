@@ -3,7 +3,6 @@ import { api } from "@/plugins/axios";
 import { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 import CreateTask from "@/components/task/CreateTask";
 import TaskItem from "@/components/task/TaskItem";
-import { apiTaskReadRequestType } from "@/types/api/task/read/request";
 import { apiTaskReadResponseType } from "@/types/api/task/read/response";
 import { apiTaskReadResponseTaskType } from "@/types/api/task/read/response";
 import AddIcon from "@mui/icons-material/Add";
@@ -16,9 +15,6 @@ import {
     CircularProgress
 } from "@mui/material";
 type Props = {
-    date: string,
-    userId: number,
-    readonly: boolean,
 }
 export default function TaskList (props: Props) {
     const [createTaskDialog, setCreateTaskDialog] = useState(false as boolean);
@@ -26,14 +22,9 @@ export default function TaskList (props: Props) {
     const [taskReadLoading, seTtaskReadLoading] = useState(false as boolean);
 
     const taskRead = () => {
-        const params: apiTaskReadRequestType = {
-            date: props.date,
-            user_id: props.userId
-        };
         const requestConfig: AxiosRequestConfig = {
-            url: "/api/task/read",
+            url: "/task/read",
             method: "GET",
-            params: params
         };
         seTtaskReadLoading(true);
         api(requestConfig)
@@ -53,13 +44,12 @@ export default function TaskList (props: Props) {
         <>
             <Card>
                 <CardHeader
-                    action={!Boolean(props.readonly) &&
+                    action={
                         <IconButton onClick={() => { setCreateTaskDialog(true); }} component="span">
                             <AddIcon color="primary" />
                         </IconButton>
                     }
                     title="タスク"
-                    subheader={props.date}
                 />
                 {taskReadLoading && !Boolean(tasks.length) &&
                     <CardContent
@@ -85,10 +75,8 @@ export default function TaskList (props: Props) {
                         {tasks.map((task: apiTaskReadResponseTaskType, index: number) => (
                             <TaskItem
                                 task={task}
-                                date={props.date}
                                 taskRead={taskRead}
                                 key={index.toString()}
-                                readonly={props.readonly}
                             />
                         ))}
                     </CardContent>
