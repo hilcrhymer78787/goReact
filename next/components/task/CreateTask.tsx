@@ -44,10 +44,10 @@ export default function CreateTask(props: Props) {
             return;
         }
         const apiParam: apiTaskDeleteRequestType = {
-            task_id: formTask.id
+            id: formTask.id
         };
         const requestConfig: AxiosRequestConfig = {
-            url: `/task/delete?id=${formTask.id}`,
+            url: `/task/delete`,
             method: "DELETE",
             data: apiParam
         };

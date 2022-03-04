@@ -1,6 +1,7 @@
 package task
 
 import (
+	request "sample/http/request/task/create"
 	"sample/pkg/db"
 
 	"github.com/labstack/echo"
@@ -10,14 +11,12 @@ import (
 func Create(c echo.Context) (err error) {
 	db := db.Connect()
 	defer db.Close()
-	type Task struct {
-		Id   int    `json:"id"`
-		Name string `json:"name"`
-	}
-	task := new(Task)
+
+	task := new(request.Req)
 	if err := c.Bind(task); err != nil {
 		return err
 	}
+
 	if task.Id != 0 {
 		db.Query(`UPDATE tasks set name = ? WHERE id = ?`, task.Name, task.Id)
 	} else {

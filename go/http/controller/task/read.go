@@ -3,7 +3,7 @@ package task
 import (
 	"log"
 	"net/http"
-	"sample/http/response"
+	response "sample/http/response/task/read"
 	"sample/pkg/db"
 
 	"github.com/labstack/echo"

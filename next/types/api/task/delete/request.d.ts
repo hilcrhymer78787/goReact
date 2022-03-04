@@ -1,3 +1,3 @@
 export interface apiTaskDeleteRequestType {
-    task_id: number
+    id: number
 }
