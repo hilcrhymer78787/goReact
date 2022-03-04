@@ -82,28 +82,6 @@ export default function CreateTask(props: Props) {
                 setTaskCreateLoading(false);
             });
     };
-    const taskUpdate = () => {
-        if (validation()) {
-            return;
-        }
-        const apiParam: apiTaskCreateRequestType = {
-            id: formTask.id,
-            name: formTask.name,
-        };
-        const requestConfig: AxiosRequestConfig = {
-            url: "/task/update",
-            method: "PUT",
-            data: apiParam
-        };
-        setTaskCreateLoading(true);
-        api(requestConfig)
-            .then((res: AxiosResponse<apiTaskReadResponseType>) => {
-                props.onCloseMyself();
-            })
-            .finally(() => {
-                setTaskCreateLoading(false);
-            });
-    };
     const validation = (): boolean => {
         let isError: boolean = false;
         setNameError("");
@@ -150,7 +128,7 @@ export default function CreateTask(props: Props) {
                 <LoadingButton
                     color="primary"
                     variant="contained"
-                    onClick={() => { formTask.id ? taskUpdate() : taskCreate() }}
+                    onClick={taskCreate}
                     loading={taskCreateLoading}
                     disabled={taskDeleteLoading}>
                     登録<SendIcon />

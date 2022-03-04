@@ -18,6 +18,10 @@ func Create(c echo.Context) (err error) {
 	if err := c.Bind(task); err != nil {
 		return err
 	}
-	db.Query(`INSERT INTO tasks (name) VALUES (?)`, task.Name)
+	if task.Id != 0 {
+		db.Query(`UPDATE tasks set name = ? WHERE id = ?`, task.Name, task.Id)
+	} else {
+		db.Query(`INSERT INTO tasks (name) VALUES (?)`, task.Name)
+	}
 	return nil
 }
