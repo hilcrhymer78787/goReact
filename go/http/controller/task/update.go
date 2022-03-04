@@ -11,9 +11,14 @@ func Update(c echo.Context) (err error) {
 	db := db.Connect()
 	defer db.Close()
 
-	id := c.QueryParam("id")
-	name := c.QueryParam("name")
-
-	db.Query(`UPDATE tasks set name = ? WHERE id = ?`, name, id)
+	type Task struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+	}
+	task := new(Task)
+	if err := c.Bind(task); err != nil {
+		return err
+	}
+	db.Query(`UPDATE tasks set name = ? WHERE id = ?`, task.Name, task.Id)
 	return nil
 }

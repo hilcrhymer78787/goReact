@@ -31,7 +31,7 @@ type Props = {
     task: apiTaskReadResponseTaskType
     onCloseMyself: any
 }
-export default function CreateTask (props: Props) {
+export default function CreateTask(props: Props) {
     const [taskCreateLoading, setTaskCreateLoading] = useState(false as boolean);
     const [taskDeleteLoading, setTaskDeleteLoading] = useState(false as boolean);
     const [formTask, setFormTask] = useState({
@@ -65,12 +65,34 @@ export default function CreateTask (props: Props) {
             return;
         }
         const apiParam: apiTaskCreateRequestType = {
-            id: Number(formTask.id),
+            id: formTask.id,
             name: formTask.name,
         };
         const requestConfig: AxiosRequestConfig = {
             url: "/task/create",
             method: "POST",
+            data: apiParam
+        };
+        setTaskCreateLoading(true);
+        api(requestConfig)
+            .then((res: AxiosResponse<apiTaskReadResponseType>) => {
+                props.onCloseMyself();
+            })
+            .finally(() => {
+                setTaskCreateLoading(false);
+            });
+    };
+    const taskUpdate = () => {
+        if (validation()) {
+            return;
+        }
+        const apiParam: apiTaskCreateRequestType = {
+            id: formTask.id,
+            name: formTask.name,
+        };
+        const requestConfig: AxiosRequestConfig = {
+            url: "/task/update",
+            method: "PUT",
             data: apiParam
         };
         setTaskCreateLoading(true);
@@ -128,7 +150,7 @@ export default function CreateTask (props: Props) {
                 <LoadingButton
                     color="primary"
                     variant="contained"
-                    onClick={taskCreate}
+                    onClick={() => { formTask.id ? taskUpdate() : taskCreate() }}
                     loading={taskCreateLoading}
                     disabled={taskDeleteLoading}>
                     登録<SendIcon />
