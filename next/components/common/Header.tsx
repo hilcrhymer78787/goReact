@@ -13,7 +13,7 @@ const mapStateToProps = (state: any) => {
         loginInfo: state.loginInfo,
     };
 };
-function Header({ loginInfo }) {
+function Header ({ loginInfo }) {
     const [mypageDialog, setMypageDialog] = useState(false as boolean);
 
     return (
@@ -22,6 +22,10 @@ function Header({ loginInfo }) {
                 <Toolbar disableGutters>
                     <Typography color="primary" variant="h6" sx={{ flexGrow: 1 }}>TSUMIAGE</Typography>
                     <IconButton onClick={() => { setMypageDialog(true); }} sx={{ p: 0 }}>
+                        <UserImg
+                            fileName={loginInfo.user_img}
+                            size="40"
+                        />
                     </IconButton>
                 </Toolbar>
             </Container>
