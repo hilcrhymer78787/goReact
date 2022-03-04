@@ -1,6 +1,6 @@
-git clone https://github.com/hilcrhymer78787/vuego.git
+https://github.com/hilcrhymer78787/goReact.git
 
-cd vuego
+cd goReact
 
 docker-compose up -d --build
 
