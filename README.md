@@ -12,7 +12,9 @@ go run main.go
 
 もう一つターミナルを開く
 
-cd nuxt
+cd next
+
+cp .env.example .env
 
 npm install
 
