@@ -15,15 +15,15 @@ import CreateUser from "@/components/user/CreateUser";
 import UserImg from "@/components/common/UserImg";
 import { loginInfoAtom } from "@/data/user";
 import { useRecoilValue } from "recoil";
-import { useRouter } from "next/router";
+import { useBearerAuthentication } from "@/data/user/useBearerAuthentication";
 
 const Mypage = () => {
   const loginInfo = useRecoilValue(loginInfoAtom);
-  const router = useRouter();
+  const { logout } = useBearerAuthentication();
   const [createUserDialog, setCreateUserDialog] = useState<boolean>(false);
-  const logout = () => {
+  const onClickLogout = () => {
     if (!confirm("ログアウトしますか？")) return;
-    router.push("/logout");
+    logout();
   };
   return (
     <Card>
@@ -41,7 +41,7 @@ const Mypage = () => {
         </ListItem>
       </CardContent>
       <CardActions>
-        <Button onClick={logout} color="inherit" variant="contained">
+        <Button onClick={onClickLogout} color="inherit" variant="contained">
           ログアウト
         </Button>
         <Button
