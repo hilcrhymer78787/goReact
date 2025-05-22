@@ -1,33 +1,29 @@
 package user
 
 import (
-	"log"
 	"net/http"
-	response "sample/http/response/user/read"
-	"sample/pkg/db"
 
 	"github.com/labstack/echo"
 )
 
 func BearerAuthentication(c echo.Context) error {
 
-	db := db.Connect()
-	defer db.Close()
+	return c.JSON(http.StatusInternalServerError, false)
 
-	res := new(response.Res)
+	// db := db.Connect()
+	// defer db.Close()
 
-	rows, err := db.Query("SELECT * FROM users WHERE id = 1 LIMIT 1;")
-	if err != nil {
-		log.Fatal(err)
-	}
-	for rows.Next() {
-		// user := response.Res{}
-		// err := rows.ToStruct(&user.Id, &user.Name, &user.Email, &user.User_img, &user.Token)
-		// if err != nil {
-		// 	log.Fatal(err)
-		// }
-	}
+	// res := new(response.Res)
 
-	return c.JSON(http.StatusOK, res)
+	// row := db.QueryRow("SELECT id, name, email, user_img, token FROM users WHERE id = 1 LIMIT 1;")
+
+	// err := row.Scan(&res.Id, &res.Name, &res.Email, &res.User_img, &res.Token)
+
+	// if err != nil {
+	// 	log.Fatal(err)
+	// 	return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Internal Server Error"})
+	// }
+
+	// return c.JSON(http.StatusOK, res)
 
 }

@@ -8,7 +8,7 @@ docker-compose exec app bash
 
 cp .env.example .env
 
-go run main.go
+air <!-- go run main.go と同じ意味-->
 
 もう一つターミナルを開く
 
@@ -16,8 +16,10 @@ cd next
 
 cp .env.example .env
 
-npm install
+nvm use v16.13.2
 
-npm run dev
+yarn install
+
+yarn dev
 
 <!-- node v16.13.2 -->

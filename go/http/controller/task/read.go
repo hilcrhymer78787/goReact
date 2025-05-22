@@ -15,17 +15,20 @@ func Read(c echo.Context) error {
 	db := db.Connect()
 	defer db.Close()
 
-	res := new(response.Res)
-	res.Hoge = "hogehoge"
+	date := c.QueryParam("date")
+	userId := c.QueryParam("userId")
 
-	rows, err := db.Query("SELECT * FROM tasks")
+	res := new(response.Res)
+	res.Date = date
+
+	rows, err := db.Query("SELECT * FROM tasks WHERE task_user_id = ?", userId)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	for rows.Next() {
 		task := response.Task{}
-		err := rows.Scan(&task.Id, &task.Name)
+		err := rows.Scan(&task.Id, &task.UserId, &task.SortKey, &task.Name)
 		if err != nil {
 			log.Fatal(err)
 		}

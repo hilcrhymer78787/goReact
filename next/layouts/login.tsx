@@ -1,20 +1,27 @@
-import React from 'react';
-import { connect } from "react-redux";
-import Container from '@mui/material/Container';
-const mapStateToProps = (state: any) => {
-    return {
-        loginInfo: state.loginInfo,
-    };
+import { ReactNode, useEffect } from "react";
+
+import Container from "@mui/material/Container";
+import { loginInfoAtom } from "@/data/user";
+import { useRecoilValue } from "recoil";
+import { useRouter } from "next/router";
+
+type Props = {
+  children: ReactNode;
 };
-function LoginLayout({ children, loginInfo }) {
-    return (
-        <>
-            {loginInfo === false && <>
-                <Container sx={{ p: '10px' }} maxWidth="xs">
-                    {children}
-                </Container>
-            </>}
-        </>
-    )
+function LoginLayout({ children }: Props) {
+  const router = useRouter();
+  const loginInfo = useRecoilValue(loginInfoAtom);
+  
+  useEffect(() => {
+    if (!loginInfo) return;
+    router.push("/");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  
+  return (
+    <Container sx={{ p: "10px" }} maxWidth="xs">
+      {children}
+    </Container>
+  );
 }
-export default connect(mapStateToProps)(LoginLayout);
+export default LoginLayout;

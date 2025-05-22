@@ -32,14 +32,18 @@ func initDb() {
 	defer db.Close()
 
 	db.Query(`CREATE TABLE IF NOT EXISTS tasks (
-				id SERIAL NOT NULL PRIMARY KEY,
-				name VARCHAR(255)
+				task_id SERIAL NOT NULL PRIMARY KEY,
+				task_user_id INT,
+				task_sort_key INT,
+				task_name VARCHAR(255)
 			)`)
 	db.Query(`TRUNCATE TABLE tasks`)
-	db.Query(`INSERT INTO tasks (name) VALUES ('Task1')`)
-	db.Query(`INSERT INTO tasks (name) VALUES ('Task2')`)
-	db.Query(`INSERT INTO tasks (name) VALUES ('Task3')`)
-	db.Query(`INSERT INTO tasks (name) VALUES ('Task4')`)
+	db.Query(`INSERT INTO tasks (task_name,task_user_id,task_sort_key) VALUES ('Task1',1,1)`)
+	db.Query(`INSERT INTO tasks (task_name,task_user_id,task_sort_key) VALUES ('Task2',1,2)`)
+	db.Query(`INSERT INTO tasks (task_name,task_user_id,task_sort_key) VALUES ('Task3',1,3)`)
+	db.Query(`INSERT INTO tasks (task_name,task_user_id,task_sort_key) VALUES ('Task4',1,4)`)
+	db.Query(`INSERT INTO tasks (task_name,task_user_id,task_sort_key) VALUES ('Task2_1',2,1)`)
+	db.Query(`INSERT INTO tasks (task_name,task_user_id,task_sort_key) VALUES ('Task2_2',2,2)`)
 
 	db.Query(`CREATE TABLE IF NOT EXISTS users (
 				id SERIAL NOT NULL PRIMARY KEY,

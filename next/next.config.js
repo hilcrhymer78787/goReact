@@ -1,11 +1,10 @@
-const withPWA = require("next-pwa");
+const withPWA = require("next-pwa")({
+  dest: "public",
+  disable: process.env.NODE_ENV === "development",
+})
 module.exports = withPWA({
-    //   buildExcludes: [/.*\.js\.map/],
-    trailingSlash: true,
-    reactStrictMode: true,
-    swcMinify: false,
-    pwa: {
-        dest: "public", // swの出力ディレクトリ
-        // runtimeCaching: []
-    },
-});
+  //   buildExcludes: [/.*\.js\.map/],
+  trailingSlash: true,
+  reactStrictMode: false,
+  swcMinify: false,
+})

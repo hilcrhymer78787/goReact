@@ -1,100 +1,44 @@
-import React, { useState, useEffect } from "react";
-import { api } from "@/plugins/axios";
-import { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
-import CreateTask from "@/components/task/CreateTask";
-import TaskItem from "@/components/task/TaskItem";
-import { apiTaskReadResponseType } from "@/types/api/task/read/response";
-import { apiTaskReadResponseTaskType } from "@/types/api/task/read/response";
-import AddIcon from "@mui/icons-material/Add";
 import {
-    Card,
-    CardHeader,
-    CardContent,
-    IconButton,
-    Dialog,
-    CircularProgress
+  Card,
+  CardContent,
+  CardHeader,
+  SxProps
 } from "@mui/material";
+
+import { Task } from "@/data/task/useReadTasks";
+import TaskItem from "@/components/task/TaskItem";
+
 type Props = {
-}
-export default function TaskList (props: Props) {
-    const [createTaskDialog, setCreateTaskDialog] = useState(false as boolean);
-    const [tasks, setTasks] = useState([] as apiTaskReadResponseTaskType[]);
-    const [taskReadLoading, seTtaskReadLoading] = useState(false as boolean);
-
-    const taskRead = () => {
-        const requestConfig: AxiosRequestConfig = {
-            url: "/task/read",
-            method: "GET",
-        };
-        seTtaskReadLoading(true);
-        api(requestConfig)
-            .then((res: AxiosResponse<apiTaskReadResponseType>) => {
-                setTasks(res.data.tasks);
-            })
-            .finally(() => {
-                seTtaskReadLoading(false);
-            });
-    };
-
-    useEffect(() => {
-        taskRead();
-    }, []);
-
-    return (
-        <>
-            <Card>
-                <CardHeader
-                    action={
-                        <IconButton onClick={() => { setCreateTaskDialog(true); }} component="span">
-                            <AddIcon color="primary" />
-                        </IconButton>
-                    }
-                    title="タスク"
-                />
-                {taskReadLoading && !Boolean(tasks.length) &&
-                    <CardContent
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            p: "30px"
-                        }}>
-                        <CircularProgress />
-                    </CardContent>
-                }
-                {!taskReadLoading && !Boolean(tasks.length) &&
-                    <CardContent
-                        sx={{
-                            textAlign: "center",
-                            p: "20px !important"
-                        }}>
-                        登録されているタスクはありません
-                    </CardContent>
-                }
-                {Boolean(tasks.length) &&
-                    <CardContent sx={{ p: "0 !important" }}>
-                        {tasks.map((task: apiTaskReadResponseTaskType, index: number) => (
-                            <TaskItem
-                                task={task}
-                                taskRead={taskRead}
-                                key={index.toString()}
-                            />
-                        ))}
-                    </CardContent>
-                }
-            </Card>
-
-            <Dialog open={createTaskDialog} onClose={() => { setCreateTaskDialog(false); }}>
-                {createTaskDialog &&
-                    <CreateTask
-                        onCloseMyself={() => {
-                            setCreateTaskDialog(false);
-                            taskRead();
-                        }}
-                        task={null}
-                    />
-                }
-            </Dialog>
-            {/* <pre>{JSON.stringify(tasks, null, 2)}</pre> */}
-        </>
-    );
-}
+  date: string;
+  readonly: boolean;
+  tasks: Task[];
+  apiTaskRead: () => void;
+  title: string;
+  sx?:SxProps
+};
+const TaskList = ({
+  date,
+  readonly,
+  tasks,
+  apiTaskRead,
+  title,
+  sx,
+}: Props) => {
+  return (
+      <Card sx={{...sx}}>
+        <CardHeader title={title}/>
+        <CardContent sx={{ p: "0 !important" }}>
+          {tasks.map((task, index) => (
+            <TaskItem
+              task={task}
+              date={date}
+              apiTaskRead={apiTaskRead}
+              key={index.toString()}
+              readonly={readonly}
+            />
+          ))}
+        </CardContent>
+      </Card>
+  );
+};
+export default TaskList;

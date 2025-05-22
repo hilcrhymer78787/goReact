@@ -1,63 +1,73 @@
+import { Box, IconButton, Typography } from "@mui/material";
+
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { useMemo } from "react";
 import { useRouter } from "next/router";
-import React from "react";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import styled from "styled-components";
-type Props = {
-    setCalendarData: any
-}
-export default function Pagination (props: Props) {
-    const router = useRouter();
-    const year = (): number => {
-        return Number(router.query.year);
-    };
-    const month = (): number => {
-        return Number(router.query.month);
-    };
-    const onClickPrevMonth = () => {
-        if (month() == 1) {
-            router.push(`${location.pathname}?year=${year() - 1}&month=12`);
-            props.setCalendarData({ year: year() - 1, month: 12 });
-        } else {
-            router.push(`${location.pathname}?year=${year()}&month=${month() - 1}`);
-            props.setCalendarData({ year: year(), month: month() - 1 });
-        };
-    };
-    const onClickNextMonth = () => {
-        if (month() == 12) {
-            router.push(`${location.pathname}?year=${year() + 1}&month=1`);
-            props.setCalendarData({ year: year() + 1, month: 1 });
-        } else {
-            router.push(`${location.pathname}?year=${year()}&month=${month() + 1}`);
-            props.setCalendarData({ year: year(), month: month() + 1 });
-        }
-    };
-    return (
-        <PaginationDiv>
-            <StyledNavigateBeforeIcon onClick={onClickPrevMonth} />
-            <H1>{year()}年 {month()}月</H1>
-            <StyledNavigateNextIcon onClick={onClickNextMonth} />
-        </PaginationDiv>
-    );
+import { LoadingButton } from "@mui/lab";
+
+export const PAGINATION_HEIGHT = 60;
+type PaginationProps = {
+  onClickReset?: () => void;
+  resetWorkLoading?: boolean;
 };
-const H1 = styled.h1`
-font-size: 25px;
-width: 183px;
-text-align: center;
-margin: 0;
-`;
-const PaginationDiv = styled.div`
-width: 100%;
-font-size: 15px;
-display: flex;
-justify-content: center;
-align-items:center;
-`;
-const StyledNavigateBeforeIcon = styled(NavigateBeforeIcon)`
-color: white;
-font-size: 30px;
-`;
-const StyledNavigateNextIcon = styled(NavigateNextIcon)`
-color: white;
-font-size: 30px;
-`;
+const Pagination = ({ onClickReset, resetWorkLoading }: PaginationProps) => {
+  const fontSize = "27px";
+  const router = useRouter();
+
+  const year = useMemo(() => {
+    return Number(router.query.year);
+  }, [router.query.year]);
+
+  const month = useMemo(() => {
+    return Number(router.query.month);
+  }, [router.query.month]);
+
+  const onClickPrevMonth = () => {
+    router.push({
+      pathname: location.pathname,
+      query: {
+        ...router.query,
+        year: month == 1 ? year - 1 : year,
+        month: month == 1 ? 12 : month - 1,
+      },
+    });
+  };
+
+  const onClickNextMonth = () => {
+    router.push({
+      pathname: location.pathname,
+      query: {
+        ...router.query,
+        year: month == 12 ? year + 1 : year,
+        month: month == 12 ? 1 : month + 1,
+      },
+    });
+  };
+
+  return (
+    <Box
+      className="flexBetween"
+      height={`${PAGINATION_HEIGHT}px`}
+      sx={{ pr: 2 }}
+    >
+      <Box className="flexStart">
+        <IconButton onClick={onClickPrevMonth}>
+          <NavigateBeforeIcon sx={{ fontSize }} />
+        </IconButton>
+        <Typography fontSize={fontSize}>
+          {year}年 {month}月
+        </Typography>
+        <IconButton onClick={onClickNextMonth}>
+          <NavigateNextIcon sx={{ fontSize }} />
+        </IconButton>
+      </Box>
+      {!!onClickReset && (
+        <LoadingButton onClick={onClickReset} loading={!!resetWorkLoading}>
+          リセット
+        </LoadingButton>
+      )}
+    </Box>
+  );
+};
+export default Pagination;

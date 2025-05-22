@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
-import Router from "next/router";
-export default function Index () {
-    useEffect(() => {
-        Router.push("/task");
-    }, []);
-    return (
-        <></>
-    );
-}
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+const Index = () => {
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/task");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return <></>;
+};
+export default Index;
