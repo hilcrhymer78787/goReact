@@ -12,6 +12,7 @@ func SetAPI(e *echo.Echo) {
 	e.GET("/api", test.Test)
 
 	e.GET("/api/user/bearer_authentication", user.BearerAuthentication)
+	e.POST("/api/user/basic_authentication", user.BasicAuthentication)
 
 	e.POST("/api/task/create", task.Create)
 	e.GET("/api/task/read", task.Read)

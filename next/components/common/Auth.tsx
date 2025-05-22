@@ -31,10 +31,10 @@ const Login = ({
     basicAuthentication,
     basicAuthenticationLoading,
   } = useUserApi();
-  const [email, setEmail] = useState<string>("");
-  const [emailError, setEmailError] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [passwordError, setPasswordError] = useState<string>("");
+  const [email, setEmail] = useState("user1@gmail.com");
+  const [emailError, setEmailError] = useState("");
+  const [password, setPassword] = useState("password");
+  const [passwordError, setPasswordError] = useState("");
   const apiTestAuthentication = async () => {
     try {
       const res = await testAuthentication();

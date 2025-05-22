@@ -14,12 +14,18 @@ const loginInfoAtom = atom<apiUserBearerAuthenticationResponseType | null>({
   default: null,
 });
 export const useBearerAuthentication = () => {
-  const [loginInfo, setLoginInfo] = useRecoilState(loginInfoAtom); 
+  const [loginInfo, setLoginInfo] = useRecoilState(loginInfoAtom);
 
   const [bearerAuthenticationLoading, setBearerAuthenticationLoading] =
     useState(false);
   const [bearerAuthenticationError, setBearerAuthenticationError] =
     useState("");
+
+  const logout = () => {
+    setLoginInfo(null);
+    localStorage.removeItem("token");
+  };
+
   const bearerAuthentication = async () => {
     setBearerAuthenticationError("");
     setBearerAuthenticationLoading(true);
@@ -45,6 +51,7 @@ export const useBearerAuthentication = () => {
 
   return {
     loginInfo,
+    logout,
     bearerAuthentication,
     bearerAuthenticationError,
     bearerAuthenticationLoading,

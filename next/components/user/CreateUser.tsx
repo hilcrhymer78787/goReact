@@ -128,7 +128,6 @@ function CreateUser({
     if (!confirm(`「${loginInfo.name}」さんを削除しますか？`)) return;
     if (!confirm("関連する全データも削除されますが、よろしいですか？")) return;
     const res = await deleteUser(loginInfo.id);
-    if (res) router.push("/auth");
   };
 
   const onKeyDown = (e?: KeyboardEvent<HTMLDivElement>) => {

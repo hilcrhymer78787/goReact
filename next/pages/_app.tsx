@@ -18,6 +18,7 @@ const AppInit = ({
   setIsAuth: Dispatch<SetStateAction<boolean | null>>;
 }) => {
   const { bearerAuthentication } = useBearerAuthentication();
+
   useEffect(() => {
     const mountedFunc = async () => {
       const res = await bearerAuthentication();
@@ -26,9 +27,11 @@ const AppInit = ({
     mountedFunc();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  
   return <></>;
 };
-function MyApp({ Component, pageProps }: AppProps) {
+
+const MyApp = ({ Component, pageProps }: AppProps) => {
   const [isAuth, setIsAuth] = useState<boolean | null>(null);
   return (
     <RecoilRoot>
@@ -41,6 +44,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       </ThemeProvider>
     </RecoilRoot>
   );
-}
+};
 
 export default MyApp;
